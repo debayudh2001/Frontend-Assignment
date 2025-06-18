@@ -153,7 +153,7 @@ const Home = () => {
 
         <div className="flex flex-col xl:flex-row gap-6">
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-            {filteredProducts.map((product) => (
+            {filteredProducts.length === 0 ? <p>No products available</p> : filteredProducts.map((product) => (
               <div
                 key={product.id}
                 className="bg-white rounded-lg shadow-sm border border-gray-200 p-4"
