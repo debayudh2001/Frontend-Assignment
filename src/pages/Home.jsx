@@ -91,7 +91,7 @@ const Home = () => {
                   onChange={() => {
                     setBaseProducts([...state.products]);
                     setSearchParams({
-                      category,
+                      category: 'all',
                     });
                   }}
                   className="w-4 h-4 text-blue-600"
