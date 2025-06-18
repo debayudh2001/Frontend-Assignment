@@ -26,7 +26,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if(!state.products){
+    if(state.products.length === 0){
       fetchProducts();
     }
   }, []);
