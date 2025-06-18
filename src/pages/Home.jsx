@@ -26,7 +26,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
+    if(!state.products){
+      fetchProducts();
+    }
   }, []);
 
   useEffect(() => {
