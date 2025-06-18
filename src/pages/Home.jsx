@@ -26,8 +26,15 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if(state.products.length === 0){
+    if (state.products.length === 0) {
       fetchProducts();
+    } else {
+      let newData = state.products.map((prod) => {
+        prod.quantity = 1;
+        return prod;
+      });
+      setFilteredProducts([...newData]);
+      setBaseProducts([...newData]);
     }
   }, []);
 
@@ -84,7 +91,7 @@ const Home = () => {
                   onChange={() => {
                     setBaseProducts([...state.products]);
                     setSearchParams({
-                      category
+                      category,
                     });
                   }}
                   className="w-4 h-4 text-blue-600"
@@ -108,7 +115,7 @@ const Home = () => {
                           )
                         );
                         setSearchParams({
-                          category
+                          category,
                         });
                       }}
                       className="w-4 h-4 text-blue-600"
@@ -130,12 +137,12 @@ const Home = () => {
                 value={priceRange[1]}
                 step={1}
                 onChange={(e) => {
-                  setPriceRange([priceRange[0], Number(e.target.value)])
-                  setSearchParams(prev => ({
+                  setPriceRange([priceRange[0], Number(e.target.value)]);
+                  setSearchParams((prev) => ({
                     ...Object.fromEntries(prev),
                     minPrice: priceRange[0],
                     maxPrice: priceRange[1],
-                  }))
+                  }));
                 }}
                 className="w-full h-2 bg-blue-300 rounded-lg appearance-none cursor-pointer slider"
               />
@@ -155,36 +162,40 @@ const Home = () => {
 
         <div className="flex flex-col xl:flex-row gap-6">
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-            {filteredProducts.length === 0 ? <p>No products available</p> : filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                className="bg-white rounded-lg shadow-sm border border-gray-200 p-4"
-              >
-                <Link to={`/product/${product.id}`}>
-                  <div className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
-                    <img
-                      src={product.image || "/placeholder.svg"}
-                      alt={product.title}
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  </div>
-                </Link>
-                <h3 className="font-semibold text-gray-800 mb-2 text-sm lg:text-base">
-                  {product.title}
-                </h3>
-                <p className="text-lg font-bold text-gray-900 mb-3">
-                  ${product.price}
-                </p>
-                <button
-                  onClick={() =>
-                    dispatch({ type: "addToCart", payload: product })
-                  }
-                  className="w-full bg-[#0062BD] hover:bg-blue-400 text-white py-2 px-4 rounded-lg font-medium text-sm lg:text-base transition-colors cursor-pointer"
+            {filteredProducts.length === 0 ? (
+              <p>No products available</p>
+            ) : (
+              filteredProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="bg-white rounded-lg shadow-sm border border-gray-200 p-4"
                 >
-                  Add to Cart
-                </button>
-              </div>
-            ))}
+                  <Link to={`/product/${product.id}`}>
+                    <div className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
+                      <img
+                        src={product.image || "/placeholder.svg"}
+                        alt={product.title}
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                    </div>
+                  </Link>
+                  <h3 className="font-semibold text-gray-800 mb-2 text-sm lg:text-base">
+                    {product.title}
+                  </h3>
+                  <p className="text-lg font-bold text-gray-900 mb-3">
+                    ${product.price}
+                  </p>
+                  <button
+                    onClick={() =>
+                      dispatch({ type: "addToCart", payload: product })
+                    }
+                    className="w-full bg-[#0062BD] hover:bg-blue-400 text-white py-2 px-4 rounded-lg font-medium text-sm lg:text-base transition-colors cursor-pointer"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
