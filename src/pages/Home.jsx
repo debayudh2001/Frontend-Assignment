@@ -90,9 +90,7 @@ const Home = () => {
                   defaultChecked
                   onChange={() => {
                     setBaseProducts([...state.products]);
-                    setSearchParams({
-                      category: 'all',
-                    });
+                    setSearchParams({});
                   }}
                   className="w-4 h-4 text-blue-600"
                 />
